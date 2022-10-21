@@ -1,7 +1,9 @@
 //! Default Compute@Edge template program.
 
 /// <reference types="@fastly/js-compute" />
-import plp from "./plp.html";
+import { interpolateProductData } from "./lib/interpolate-product-data";
+import plp from "./pages/plp.html";
+import productData from './data/mock-algolia-payload.json';
 
 // The entry point for your application.
 //
@@ -55,11 +57,15 @@ async function handleRequest(event) {
     // Log to a Fastly endpoint.
     // const logger = fastly.getLogger("my_endpoint");
     // logger.log("Hello from the edge!");
+    const page = await interpolateProductData(plp, productData);
 
     // Send a default synthetic response.
-    return new Response(plp, {
+    return new Response(page, {
       status: 200,
-      headers: new Headers({ "Content-Type": "text/html; charset=utf-8" }),
+      headers: new Headers({
+        "Content-Type": "text/html; charset=utf-8",
+        "Accept-encoding": "gzip, deflate"
+      }),
     });
   }
 
