@@ -1,7 +1,7 @@
 //! Default Compute@Edge template program.
 
 /// <reference types="@fastly/js-compute" />
-import welcomePage from "./welcome-to-compute@edge.html";
+import plp from "./plp.html";
 
 // The entry point for your application.
 //
@@ -57,7 +57,7 @@ async function handleRequest(event) {
     // logger.log("Hello from the edge!");
 
     // Send a default synthetic response.
-    return new Response(welcomePage, {
+    return new Response(plp, {
       status: 200,
       headers: new Headers({ "Content-Type": "text/html; charset=utf-8" }),
     });
